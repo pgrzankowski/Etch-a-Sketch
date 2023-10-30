@@ -15,6 +15,13 @@ main {
     align-items: center;
 }
 
+#tools {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+
 #gridContainer {
     display: grid;
     grid-template-columns: repeat(16, 1fr);
