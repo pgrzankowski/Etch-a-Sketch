@@ -2,10 +2,33 @@ const gridContainer = document.querySelector("#gridContainer");
 const clearBtn = document.querySelector("#clearBtn");
 const gridSizeLabel = document.querySelector("#gridSizeLabel");
 const sizeSlider = document.querySelector("#sizeSlider");
+const selectColor = document.querySelector("#selectColor");
+const rainbow = document.querySelector("#rainbow");
 
 let grid = [];
 let gridSize = 16;
 
+let CURRENT_COLOR = "#000000";
+let LAST_COLOR = CURRENT_COLOR;
+let RAINBOW = false;
+
+document.ondragstart = () => {return false;}
+
+rainbow.onclick = () => {
+    if (RAINBOW) {
+        CURRENT_COLOR = LAST_COLOR;
+        rainbow.classList.remove("toolPressed")
+        RAINBOW = false;
+    } else {
+        LAST_COLOR = CURRENT_COLOR;
+        rainbow.classList.add("toolPressed")
+        RAINBOW = true;
+    }
+}
+
+selectColor.onchange = () => {
+    CURRENT_COLOR = selectColor.value;
+}
 
 sizeSlider.onchange = () => {
     let a = sizeSlider.value;
@@ -36,8 +59,15 @@ function createGrid() {
 }
 
 function paint(e) {
+    e.preventDefault();
     if (e.buttons === 1){
-        e.target.style.backgroundColor = "#ff0000";
+        if (RAINBOW) {
+            let r = Math.floor((Math.random() * 255));
+            let g = Math.floor((Math.random() * 255));
+            let b = Math.floor((Math.random() * 255));
+            CURRENT_COLOR = `rgb(${r}, ${g}, ${b})`;
+        }
+        e.target.style.backgroundColor = CURRENT_COLOR;
     }
 }
 

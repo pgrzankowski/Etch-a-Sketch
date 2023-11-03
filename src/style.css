@@ -1,11 +1,13 @@
-body {
+body{
     display: flex;
     flex-flow: column;
     justify-content: center;
     align-items: center;
-
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #333;
+}
+
+body * {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #e1e1e1;
 }
 
@@ -22,8 +24,27 @@ main {
     align-items: center;
 }
 
+.tool {
+    width: 150px;
+    height: 50px;
+    background-color: #3333ee;
+    border: solid 5px #e1e1e1;
+    border-radius: 5px;
+}
+
+.toolPressed {
+    background-color: #000;
+}
+
+#selectColor {
+    width: 50px;
+    height: 50px;
+}
+
 #gridContainer {
     display: grid;
+    width: 640px;
+    height: 640px;
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(16, 1fr);
     
@@ -31,7 +52,5 @@ main {
 }
 
 .gridSquare {
-    height: 24px;
-    width: 24px;
     background-color: #fff;
 }
