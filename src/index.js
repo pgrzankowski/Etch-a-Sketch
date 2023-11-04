@@ -4,30 +4,40 @@ const gridSizeLabel = document.querySelector("#gridSizeLabel");
 const sizeSlider = document.querySelector("#sizeSlider");
 const selectColor = document.querySelector("#selectColor");
 const rainbow = document.querySelector("#rainbow");
+const shade = document.querySelector("#shade");
 
 let grid = [];
 let gridSize = 16;
 
-let CURRENT_COLOR = "#000000";
-let LAST_COLOR = CURRENT_COLOR;
-let RAINBOW = false;
+let mouseIsDown = false;
+let currentColor = "#000000";
+let lastColor = currentColor;
+let rainbowSelected = false;
+let shadeSelected = false;
 
-document.ondragstart = () => {return false;}
+// document.ondragstart = () => {return false;}
+
+shade.onclick = () => {
+    if (shadeSelected) {
+
+    }
+}
 
 rainbow.onclick = () => {
-    if (RAINBOW) {
-        CURRENT_COLOR = LAST_COLOR;
+    if (rainbowSelected) {
+        currentColor = lastColor;
         rainbow.classList.remove("toolPressed")
-        RAINBOW = false;
+        rainbowSelected = false;
     } else {
-        LAST_COLOR = CURRENT_COLOR;
+        lastColor = currentColor;
         rainbow.classList.add("toolPressed")
-        RAINBOW = true;
+        rainbowSelected = true;
     }
 }
 
 selectColor.onchange = () => {
-    CURRENT_COLOR = selectColor.value;
+    currentColor = selectColor.value;
+    lastColor = currentColor;
 }
 
 sizeSlider.onchange = () => {
@@ -51,23 +61,46 @@ function createGrid() {
         for (let j=0; j<gridSize; j++) {
             const square = document.createElement("div");
             square.classList.add("gridSquare");
-            square.addEventListener("mouseover", paint);
+            square.setAttribute('draggable', 'false');
             grid[i][j] = square;
             gridContainer.appendChild(square);
         }
     }
+
+    gridContainer.addEventListener("mousedown", e => {
+        mouseIsDown = true;
+        paint(e);
+    })
+
+    gridContainer.addEventListener("mouseup", () => {
+        mouseIsDown = false;
+    })
+
+    gridContainer.addEventListener("mouseleave", () => {
+        mouseIsDown = false;
+    })
+
+    gridContainer.addEventListener("mouseover", e => {
+        paint(e);
+    })
+
+    gridContainer.addEventListener("click", e => {
+        mouseIsDown = true;
+        paint(e);
+        mouseIsDown = false;
+    })
 }
 
 function paint(e) {
     e.preventDefault();
-    if (e.buttons === 1){
-        if (RAINBOW) {
+    if (mouseIsDown){
+        if (rainbowSelected) {
             let r = Math.floor((Math.random() * 255));
             let g = Math.floor((Math.random() * 255));
             let b = Math.floor((Math.random() * 255));
-            CURRENT_COLOR = `rgb(${r}, ${g}, ${b})`;
+            currentColor = `rgb(${r}, ${g}, ${b})`;
         }
-        e.target.style.backgroundColor = CURRENT_COLOR;
+        e.target.style.backgroundColor = currentColor;
     }
 }
 
