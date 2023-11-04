@@ -19,7 +19,13 @@ let shadeSelected = false;
 
 shade.onclick = () => {
     if (shadeSelected) {
-
+        currentColor = lastColor;
+        shade.classList.remove("toolPressed");
+        shadeSelected = false;
+    } else {
+        lastColor = currentColor;
+        shade.classList.add("toolPressed");
+        shadeSelected = true;
     }
 }
 
@@ -45,7 +51,6 @@ sizeSlider.onchange = () => {
     gridSizeLabel.textContent = `${a}x${a}`;
     gridSize = a;
     createGrid()
-    console.log(gridSize);
 }
 
 
@@ -61,34 +66,11 @@ function createGrid() {
         for (let j=0; j<gridSize; j++) {
             const square = document.createElement("div");
             square.classList.add("gridSquare");
-            square.setAttribute('draggable', 'false');
+            square.setAttribute("data-shade", 0);
             grid[i][j] = square;
             gridContainer.appendChild(square);
         }
     }
-
-    gridContainer.addEventListener("mousedown", e => {
-        mouseIsDown = true;
-        paint(e);
-    })
-
-    gridContainer.addEventListener("mouseup", () => {
-        mouseIsDown = false;
-    })
-
-    gridContainer.addEventListener("mouseleave", () => {
-        mouseIsDown = false;
-    })
-
-    gridContainer.addEventListener("mouseover", e => {
-        paint(e);
-    })
-
-    gridContainer.addEventListener("click", e => {
-        mouseIsDown = true;
-        paint(e);
-        mouseIsDown = false;
-    })
 }
 
 function paint(e) {
@@ -99,13 +81,44 @@ function paint(e) {
             let g = Math.floor((Math.random() * 255));
             let b = Math.floor((Math.random() * 255));
             currentColor = `rgb(${r}, ${g}, ${b})`;
+            e.target.style.backgroundColor = currentColor;
+        } else if (shadeSelected) {
+            let shadeStep = Number(e.target.dataset.shade);
+            if (shadeStep < 10) {
+                e.target.dataset.shade = shadeStep + 1;
+            }
+            console.log(e.target.dataset.shade);
+        } else {
+            e.target.style.backgroundColor = currentColor;
         }
-        e.target.style.backgroundColor = currentColor;
     }
 }
 
 
 createGrid();
+
+gridContainer.addEventListener("mousedown", e => {
+    paint(e);
+    mouseIsDown = true;
+})
+
+gridContainer.addEventListener("mouseup", () => {
+    mouseIsDown = false;
+})
+
+gridContainer.addEventListener("mouseleave", () => {
+    mouseIsDown = false;
+})
+
+gridContainer.addEventListener("mouseover", e => {
+    paint(e);
+})
+
+gridContainer.addEventListener("click", e => {
+    mouseIsDown = true;
+    paint(e);
+    mouseIsDown = false;
+})
 
 clearBtn.addEventListener("click", () => {
     grid.forEach(row => {

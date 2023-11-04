@@ -1,8 +1,8 @@
 body{
     display: flex;
     flex-flow: column;
-    justify-content: center;
-    align-items: center;
+    justify-content: stretch;
+    align-items: stretch;
     background-color: #333;
 }
 
@@ -13,15 +13,20 @@ body * {
 
 main {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    align-items: stretch;
+    justify-content: space-around;
 }
 
 #tools {
     display: flex;
     flex-flow: column;
-    justify-content: center;
     align-items: center;
+    justify-content: space-around;
+
+    background-color: #44aaff;
+    border: solid 20px #ff5544;
+    border-radius: 25px;
+    padding: 20px;
 }
 
 .tool {
@@ -30,6 +35,13 @@ main {
     background-color: #3333ee;
     border: solid 5px #e1e1e1;
     border-radius: 5px;
+}
+
+#gridSizeDiv {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
 }
 
 .toolPressed {
@@ -49,6 +61,8 @@ main {
     grid-template-rows: repeat(16, 1fr);
     
     background-color: #000;
+    border: 20px solid #ff5544;
+    border-radius: 20px;
 }
 
 .gridSquare {
