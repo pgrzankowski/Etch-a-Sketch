@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sketchpad</title>
+    <title>Darksketch</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
-        <h1>Sketchpad</h1>
+        <h1 id="title">Sketchpad</h1>
     </header>
     <main>
         <div id="tools">
             <input type="color" id="selectColor">
             <button id="rainbow" class="tool">rainbow</button>
-            <button id="shade" class="tool">shade</button>
+            <button id="darken" class="tool">darken</button>
+            <button id="lighten" class="tool">lighten</button>
             <button id="clearBtn" class="tool">clear</button>
             <div id="gridSizeDiv">
-                <label id="gridSizeLabel">16x16</label>
+                <label id="gridSizeLabel">32x32</label>
                 <input type="range" id="sizeSlider" min="1" max="64">
             </div>
         </div>
         <div id="gridContainer"></div>
     </main>
 
-    <script src="index.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

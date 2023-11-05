@@ -3,18 +3,30 @@ body{
     flex-flow: column;
     justify-content: stretch;
     align-items: stretch;
-    background-color: #333;
+    background-color: #070707;
 }
 
 body * {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    color: #e1e1e1;
+    color: #bb0000;
+}
+
+#title {
+    color: #000;
+    text-shadow: 0 0 20px #ff0000;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 main {
     display: flex;
     align-items: stretch;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 50px;
 }
 
 #tools {
@@ -23,18 +35,32 @@ main {
     align-items: center;
     justify-content: space-around;
 
-    background-color: #44aaff;
-    border: solid 20px #ff5544;
-    border-radius: 25px;
+    background-color: #000;
+    border: solid 3px #bb0000;
     padding: 20px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
 }
 
 .tool {
     width: 150px;
     height: 50px;
-    background-color: #3333ee;
-    border: solid 5px #e1e1e1;
-    border-radius: 5px;
+    background-color: #000;
+    border: solid 2px #bb0000;
+    border-radius: 10px;
+    font-size: 17px;
+
+    transition: transform 0.1s ease-in-out;
+}
+
+.tool:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px #bb0000;
+}
+
+.toolPressed {
+    background-color: #bb0000;
+    color: #000;
 }
 
 #gridSizeDiv {
@@ -44,27 +70,77 @@ main {
     align-items: center;
 }
 
-.toolPressed {
-    background-color: #000;
+#selectColor {
+    width: 60px;
+    height: 60px;
+
+    transition: transform 0.1s ease-in-out;
 }
 
-#selectColor {
-    width: 50px;
-    height: 50px;
+#selectColor:hover {
+    transform: scale(1.2);
 }
 
 #gridContainer {
     display: grid;
     width: 640px;
     height: 640px;
+    min-width: 640px;
     grid-template-columns: repeat(16, 1fr);
     grid-template-rows: repeat(16, 1fr);
     
     background-color: #000;
-    border: 20px solid #ff5544;
-    border-radius: 20px;
+    border: 3px solid #bb0000;
 }
 
 .gridSquare {
-    background-color: #fff;
+    background-color: #000;
+}
+
+input[type="color"] {
+    -webkit-appearance: none;
+    appearance: auto;
+    width: 80px;
+    height: 80px;
+    border: 15px solid #bb0000;
+    border-radius: 40%;
+    background: #bb0000;
+    box-shadow: 0 0 40px #bb0000;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+input[type="color"]::-webkit-color-swatch {
+    border: none;
+}
+input[type="color"]::-moz-color-swatch {
+    border: none;
+}
+
+
+input[type="range"] {
+    -webkit-appearance: none;
+    appearance: auto;
+    background: #bb0000;
+    color: #000;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 16px;
+    background: #555;
+    border-radius: 16px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Removes default styling */
+    appearance: none;
+    height: 16px;
+    width: 16px;
+    background: #bb0000 !important;
+    overflow: visible;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-top: 0px; /* Required to align the thumb with the track */
 }
