@@ -14,53 +14,58 @@ let mouseIsDown = false;
 
 selectColor.value = "#bb0000";
 let currentColor = selectColor.value;
-let lastColor = currentColor;
 let backgroundColor = window.getComputedStyle(gridContainer).backgroundColor;
-
 
 let rainbowSelected = false;
 let darkenSelected = false;
 let lightenSelected = false;
 
-
 lighten.addEventListener("click", () => {
     if (lightenSelected) {
-        currentColor = lastColor;
         lighten.classList.remove("toolPressed");
         lightenSelected = false;
     } else {
-        lastColor = currentColor;
+        // make this pressed
         lighten.classList.add("toolPressed");
         lightenSelected = true;
+        // make other tools unpressed
+        darken.classList.remove("toolPressed");
+        darkenSelected = false;
+        rainbow.classList.remove("toolPressed");
+        rainbowSelected = false;
     }
 })
 
 darken.addEventListener("click", () => {
     if (darkenSelected) {
-        currentColor = lastColor;
         darken.classList.remove("toolPressed");
         darkenSelected = false;
     } else {
-        lastColor = currentColor;
+        // make this pressed
         darken.classList.add("toolPressed");
         darkenSelected = true;
+        // make other tools unpressed
+        lighten.classList.remove("toolPressed");
+        lightenSelected = false;
+        rainbow.classList.remove("toolPressed");
+        rainbowSelected = false;
     }
 })
 
 rainbow.addEventListener("click", () => {
     if (rainbowSelected) {
-        currentColor = lastColor;
         rainbow.classList.remove("toolPressed")
         rainbowSelected = false;
     } else {
-        lastColor = currentColor;
+        // make this pressed
         rainbow.classList.add("toolPressed")
         rainbowSelected = true;
+        // make other tools unpressed
+        darken.classList.remove("toolPressed");
+        darkenSelected = false;
+        lighten.classList.remove("toolPressed");
+        lightenSelected = false;
     }
-})
-
-selectColor.addEventListener("change", () => {
-    lastColor = currentColor;
 })
 
 selectColor.addEventListener("input", () => {
@@ -78,7 +83,6 @@ sizeSlider.addEventListener("input", () => {
     gridSizeLabel.textContent = `${a}x${a}`;
     gridSize = a;
 })
-
 
 function createGrid() {
     while (gridContainer.firstChild) {
@@ -120,11 +124,12 @@ function paint(e) {
             l = l - (l % 10);
             l = Math.min(100, l + 10);
             currentColor = `hsl(${h}, ${s}%, ${l}%)`;
+        } else {
+            currentColor = selectColor.value;
         }
         e.target.style.backgroundColor = currentColor;
     }
 }
-
 
 createGrid();
 
@@ -152,8 +157,6 @@ clearBtn.addEventListener("click", () => {
         })
     })
 });
-
-
 
 function rgbToHsl(rgb) {
     rgb = rgb.replace(/[rgb()]/g, "").split(", ");
